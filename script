@@ -1,0 +1,27 @@
+#!/bin/bash
+
+dirs=( cl256 cl512 cl1024 cl2048 )
+caches=( assoc_rand assoc_bitplru assoc_lru assoc_treeplru )
+
+#   -m
+#   measurement=("entropy","profiling","attacker","efficiency")
+
+#   -v
+#   victim_program=("AES","SquareMult")
+
+#   -c ./CacheFX/dirs[i]/caches[j]
+
+#   -o ./output/dirs[i]/caches[j]
+
+#   -t
+#	efficiency_attack=("probability","size","noise","heatmap")
+
+#       -m profiling
+for i in "${dirs[@]}"
+do
+	for j in "${caches[@]}"
+   do
+        ./CacheFX/cachefx -m profiling -v AES -c ./CacheFX/configs/$i/$j.xml -o ./outputs/AES/$i/$j.csv
+        ./CacheFX/cachefx -m profiling -v SquareMult -c ./CacheFX/configs/$i/$j.xml -o ./outputs/SquareMult/$i/$j.csv
+   done
+done
